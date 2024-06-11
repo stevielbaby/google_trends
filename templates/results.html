@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results for {{ keyword }} in {{ region }}</title>
+</head>
+<body>
+    <h1>Interest by Region for "{{ keyword }}" in "{{ region }}"</h1>
+    
+    <h2>Interest by Region</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Region</th>
+                <th>Interest</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data.interest_by_region %}
+                <tr>
+                    <td>{{ row['geoName'] }}</td>
+                    <td>{{ row[keyword] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <h2>Interest Over Time</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Interest</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data.interest_over_time %}
+                <tr>
+                    <td>{{ row['date'] }}</td>
+                    <td>{{ row[keyword] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Related Queries</h2>
+    <div>
+        <h3>Top Related Queries</h3>
+        <ul>
+            {% for item in data.related_queries[keyword]['top']['query'] %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Rising Related Queries</h3>
+        <ul>
+            {% for item in data.related_queries[keyword]['rising']['query'] %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <h2>Related Topics</h2>
+    <div>
+        <h3>Top Related Topics</h3>
+        <ul>
+            {% for item in data.top_related_topics %}
+                <li>{{ item['topic_title'] }} - {{ item['value'] }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Rising Related Topics</h3>
+        <ul>
+            {% for item in data.rising_related_topics %}
+                <li>{{ item['topic_title'] }} - {{ item['value'] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <br>
+    <a href="/">Search Again</a>
+</body>
+</html>
